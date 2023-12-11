@@ -40,9 +40,10 @@ default)
 
 ### GET - getInquiryPrices
     Consulta de precios
-> ```
-> curl -i --location --request GET http://localhost:8080/inquiry-prices \
->    --header 'x-tenant:local-ci' \
->    --header 'x-correlator: "abc12345678" ' \
->    --header 'x-token-info: {"activated_roles":["user","owner","admin"], "client_id":"novum", "sub":"USER_ID"}' 
+```bash
+
+curl -i --location --request GET \
+http://localhost:8080/inquiry-prices?applicationDate=2023-01-01%2012:00:00&productId=123&brandId=456 \
+--header 'x-correlator: "abc12345678"'
+
 > ```
