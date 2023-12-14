@@ -1,5 +1,7 @@
 package net.jordimp.productoffers.controllers;
 
+import static net.jordimp.productoffers.constants.Patterns.INQUIRY_PRICES_FORMAT;
+
 import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,7 +24,7 @@ public class ProductOffersController {
 
     @GetMapping("/inquiry-prices")
     ResponseProductOffer getInquiryPrices(
-        @RequestParam("applicationDate") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime applicationDate,
+        @RequestParam("applicationDate") @DateTimeFormat(pattern = INQUIRY_PRICES_FORMAT) LocalDateTime applicationDate,
         @RequestParam("productId") Long productId, @RequestParam("brandId") Long brandId,
         @RequestHeader(value = "x-correlator") String xCorrelator) {
 

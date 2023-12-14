@@ -1,5 +1,7 @@
 package net.jordimp.productoffers.helpers;
 
+import static net.jordimp.productoffers.constants.Patterns.TEST_FORMAT;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,7 +15,7 @@ import net.jordimp.productoffers.entities.Prices;
 public class PricesObjectMother {
 
     public static List<Prices> mockPrices() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH.mm.ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TEST_FORMAT);
 
         Prices price1 = new Prices();
         price1.setBrandId(1L);
@@ -56,5 +58,11 @@ public class PricesObjectMother {
         price4.setCurrency("EUR");
 
         return Arrays.asList(price1, price2, price3, price4);
+    }
+
+    public static List<Prices> mockPricesByBrandIdAndProductId(Long brandId, Long productId) {
+        return mockPrices().stream()
+            .filter(price -> price.getBrandId().equals(brandId) && price.getProductId().equals(productId))
+            .toList();
     }
 }
