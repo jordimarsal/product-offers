@@ -16,24 +16,24 @@ default)
 <br>
 
 
-## Running the adapter
+## Running the service
 <br>
 
-> #### Running the adapter locally
+> #### Running the service locally
 >
 > ```bash
 > JAVA_OPTS="-XX:+UseContainerSupport -XX:+UseParallelGC -XX:MaxRAMPercentage=75"
 > LOG_LEVEL="DEBUG"
 > TIMEOUT_REQUEST="15s"
-> ../mvnw spring-boot:run
+> ./mvnw spring-boot:run
 > ```
-> This will run the adapter locally on port 8080
+> This will run the service locally on port 8080
 <br>
 
 <br>
 
 
-## Testing the adapter
+## Testing the service
 
 
 ### <span style="color:orange">Endpoints for Product Offers API:</span>
@@ -43,7 +43,7 @@ default)
 ```bash
 
 curl -i --location --request GET \
-http://localhost:8080/inquiry-prices?applicationDate=2023-01-01%2012:00:00&productId=123&brandId=456 \
---header 'x-correlator: "abc12345678"'
+http://localhost:8080/inquiry-prices\?applicationDate=2020-06-14%2010:00:00\&productId=35455\&brandId=1 \
+--header 'x-correlator:abc12345678'
 
 > ```

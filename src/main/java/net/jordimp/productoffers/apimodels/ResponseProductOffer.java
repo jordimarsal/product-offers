@@ -1,5 +1,8 @@
 package net.jordimp.productoffers.apimodels;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -8,10 +11,13 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 public class ResponseProductOffer {
-    private  String productId;
-    private  String brandId;
-    private  String appDate;
-    private  String priceList;
-    private  String price;
-    private  String currency;
+
+    private Long productId;
+    private Long brandId;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private Long priceList;
+    private BigDecimal price;
+    private String currency;
+
 }

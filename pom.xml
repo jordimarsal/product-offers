@@ -15,54 +15,42 @@
 	<name>product-offers</name>
 	<description>Assesment Test Product Offers</description>
 	<properties>
-		<java.version>21</java.version>
-        <spring-boot.version>3.2.0</spring-boot.version>
-        <spring-boot-starter-webflux.version>3.0.4</spring-boot-starter-webflux.version>
-        <spring-boot-starter-validation.version>3.1.0</spring-boot-starter-validation.version>
-        <commons-lang3.version>3.12.0</commons-lang3.version>
-        <lombok.version>1.18.30</lombok.version>
-        <r2dbc-h2.version>1.0.0.RELEASE</r2dbc-h2.version>
+		<java.version>17</java.version>
+        <lombok.version>1.18.26</lombok.version>
         <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
         <!-- JaCoCo default ratios -->
-        <jacoco.instruction.covered.ratio>0.0</jacoco.instruction.covered.ratio>
-        <jacoco.branch.covered.ratio>0.0</jacoco.branch.covered.ratio>
-        <jacoco.complexity.covered.ratio>0.0</jacoco.complexity.covered.ratio>
-        <jacoco.line.covered.ratio>0.0</jacoco.line.covered.ratio>
-        <jacoco.method.covered.ratio>0.0</jacoco.method.covered.ratio>
-        <jacoco.class.covered.ratio>0.0</jacoco.class.covered.ratio>
+        <jacoco.instruction.covered.ratio>0.690</jacoco.instruction.covered.ratio>
+        <jacoco.branch.covered.ratio>0.400</jacoco.branch.covered.ratio>
+        <jacoco.complexity.covered.ratio>0.670</jacoco.complexity.covered.ratio>
+        <jacoco.line.covered.ratio>0.800</jacoco.line.covered.ratio>
+        <jacoco.method.covered.ratio>0.710</jacoco.method.covered.ratio>
+        <jacoco.class.covered.ratio>0.750</jacoco.class.covered.ratio>
 
 	</properties>
 	<dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
-            <version>${spring-boot-starter-webflux.version}</version>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-            <version>${spring-boot-starter-validation.version}</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/io.r2dbc/r2dbc-h2 -->
-        <dependency>
-            <groupId>io.r2dbc</groupId>
-            <artifactId>r2dbc-h2</artifactId>
-            <version>${r2dbc-h2.version}</version>
+            <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.version}</version>
         </dependency>
 
         <dependency>
@@ -77,19 +65,96 @@
             <version>${jacoco-maven-plugin.version}</version>
         </dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 	<build>
+        <pluginManagement>
+            <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*Application*</exclude>
+                        <exclude>**/apimodels/**</exclude>
+                        <exclude>**/models/**</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>default-report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-check</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <haltOnFailure>true</haltOnFailure>
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>INSTRUCTION</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>${jacoco.instruction.covered.ratio}</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>BRANCH</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>${jacoco.branch.covered.ratio}</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>COMPLEXITY</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>${jacoco.complexity.covered.ratio}</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>${jacoco.line.covered.ratio}</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>METHOD</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>${jacoco.method.covered.ratio}</minimum>
+                                        </limit>
+                                        <limit>
+                                            <counter>CLASS</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>${jacoco.class.covered.ratio}</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            </plugins>
+        </pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
 		</plugins>
 	</build>
 
