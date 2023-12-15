@@ -47,4 +47,4 @@ http://localhost:8080/inquiry-prices\?applicationDate=2020-06-14%2010:00:00\&pro
 curl -i --location --request GET \
 http://localhost:8080/inquiry-prices\?applicationDate=2023-06-14%2010:00:00\&productId=35455\&brandId=1 \
 --header 'x-correlator:abc12345678'
-> ```
+```
