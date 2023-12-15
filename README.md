@@ -2,15 +2,26 @@
 
 This service enables endpoints for Product Offers API
 <br>
+## Implemented with:
+- Java 17 
+- Spring Boot 3.2.0
+- H2 2.2.224
+- Maven 3.8.3
+- JUnit 5.10.1
+- Mockito 5.7.0
+- Lombok 1.18.26
+- Jacoco 0.8.1
 <br>
 
 
 ## Running the service
 <br>
 
-> #### Running the service locally
+> #### Running the service locally with Maven
 >
 > ```bash
+> mvn clean install
+> 
 > ./mvnw spring-boot:run
 > ```
 > This will run the service locally on port 8080
