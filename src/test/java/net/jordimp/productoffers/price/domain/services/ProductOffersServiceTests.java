@@ -1,4 +1,4 @@
-package net.jordimp.productoffers.services;
+package net.jordimp.productoffers.price.domain.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -19,7 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import net.jordimp.productoffers.helpers.PricesObjectMother;
-import net.jordimp.productoffers.repositories.PricesRepository;
+import net.jordimp.productoffers.price.domain.repositories.PricesRepository;
 
 class ProductOffersServiceTests {
 

@@ -1,6 +1,6 @@
 package net.jordimp.productoffers.helpers;
 
-import static net.jordimp.productoffers.constants.Patterns.TEST_FORMAT;
+import static net.jordimp.productoffers.shared.constants.Patterns.TEST_FORMAT;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import lombok.experimental.UtilityClass;
-import net.jordimp.productoffers.entities.Prices;
+import net.jordimp.productoffers.price.domain.entities.Prices;
 
 @UtilityClass
 public class PricesObjectMother {

@@ -1,4 +1,4 @@
-package net.jordimp.productoffers.errors;
+package net.jordimp.productoffers.price.application.errors;
 
 import org.springframework.http.HttpStatus;
 

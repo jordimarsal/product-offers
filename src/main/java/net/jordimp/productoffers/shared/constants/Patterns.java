@@ -1,4 +1,4 @@
-package net.jordimp.productoffers.constants;
+package net.jordimp.productoffers.shared.constants;
 
 import lombok.experimental.UtilityClass;
 

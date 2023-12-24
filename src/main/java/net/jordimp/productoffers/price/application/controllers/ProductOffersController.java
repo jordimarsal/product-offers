@@ -1,6 +1,6 @@
-package net.jordimp.productoffers.controllers;
+package net.jordimp.productoffers.price.application.controllers;
 
-import static net.jordimp.productoffers.constants.Patterns.INQUIRY_PRICES_FORMAT;
+import static net.jordimp.productoffers.shared.constants.Patterns.INQUIRY_PRICES_FORMAT;
 
 import java.time.LocalDateTime;
 
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import net.jordimp.productoffers.apimodels.ResponseProductOffer;
-import net.jordimp.productoffers.services.ProductOffersService;
+import net.jordimp.productoffers.price.application.apimodels.ResponseProductOffer;
+import net.jordimp.productoffers.price.domain.services.ProductOffersService;
 
 @RestController
 @Validated

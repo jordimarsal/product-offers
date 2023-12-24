@@ -1,4 +1,4 @@
-package net.jordimp.productoffers.entities;
+package net.jordimp.productoffers.price.domain.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

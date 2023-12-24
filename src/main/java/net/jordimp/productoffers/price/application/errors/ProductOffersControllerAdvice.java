@@ -1,4 +1,4 @@
-package net.jordimp.productoffers.errors;
+package net.jordimp.productoffers.price.application.errors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -9,7 +9,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.validation.ConstraintViolationException;
-import net.jordimp.productoffers.controllers.ProductOffersController;
+import net.jordimp.productoffers.price.application.controllers.ProductOffersController;
 
 @RestControllerAdvice(assignableTypes = ProductOffersController.class)
 public class ProductOffersControllerAdvice {

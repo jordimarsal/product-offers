@@ -1,8 +1,8 @@
-package net.jordimp.productoffers.services;
+package net.jordimp.productoffers.price.domain.services;
 
 import java.time.LocalDateTime;
 
-import net.jordimp.productoffers.apimodels.ResponseProductOffer;
+import net.jordimp.productoffers.price.application.apimodels.ResponseProductOffer;
 
 public interface ProductOffersService {
 

@@ -1,4 +1,4 @@
-package net.jordimp.productoffers.apimodels;
+package net.jordimp.productoffers.price.application.apimodels;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
