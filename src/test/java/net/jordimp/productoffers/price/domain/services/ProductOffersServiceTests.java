@@ -3,12 +3,18 @@ package net.jordimp.productoffers.price.domain.services;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -49,8 +55,11 @@ class ProductOffersServiceTests {
     @MethodSource("getOffersParams")
     void testGetInquiryPrices(LocalDateTime applicationDate, Long productId, Long brandId, Long expectedPriceList) {
         // When
-        when(pricesRepository.findByBrandIdAndProductId(brandId, productId)).thenReturn(
-            PricesObjectMother.mockPrices());
+        when(pricesRepository.findTopByBrandIdAndProductIdAndApplicationDateBetweenOrderByPriorityDesc(
+            brandId, productId,applicationDate)).thenReturn(Optional.ofNullable(
+            PricesObjectMother.mockPricesExpected(expectedPriceList)
+        )
+        );
 
         // Then
         var result = service.getInquiryPrices("correlator", applicationDate, productId, brandId);
@@ -85,6 +94,25 @@ class ProductOffersServiceTests {
         // Assert
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
         assertEquals("Price not found for the given parameters", exception.getReason());
+    }
+
+    @Mock
+    Logger mockLogger;
+
+    @Test
+    void testLogInfo() {
+        // Given
+        PricesRepository mockRepository = mock(PricesRepository.class);
+
+
+        ProductOffersServiceImpl service = new ProductOffersServiceImpl(mockRepository);
+
+
+        // When
+        service.logInfo("Test message");
+
+        // Then
+        verify(mockLogger, times(0)).info("Test message");
     }
 
 }

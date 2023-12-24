@@ -65,4 +65,9 @@ public class PricesObjectMother {
             .filter(price -> price.getBrandId().equals(brandId) && price.getProductId().equals(productId))
             .toList();
     }
+
+    public static Prices mockPricesExpected(Long priceList) {
+        return mockPrices().stream().filter(price -> price.getPriceList().equals(priceList)).findFirst()
+            .orElse(null);
+    }
 }

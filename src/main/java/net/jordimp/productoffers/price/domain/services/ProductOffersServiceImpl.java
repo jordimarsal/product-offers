@@ -44,7 +44,7 @@ public class ProductOffersServiceImpl implements ProductOffersService {
 
     }
 
-    private void logInfo(String msg) {
+    void logInfo(String msg) {
         if (log.isLoggable(Level.INFO)){
             log.info(msg);
         }
