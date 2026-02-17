@@ -22,6 +22,7 @@ import lombok.Setter;
 @Table(name = "PRICES")
 public class Prices {
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

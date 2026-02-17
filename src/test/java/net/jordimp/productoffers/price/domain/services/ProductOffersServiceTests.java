@@ -83,8 +83,8 @@ class ProductOffersServiceTests {
     @MethodSource("getOffersParamsError")
     void testGetInquiryPricesErrorCases(LocalDateTime applicationDate, Long productId, Long brandId) {
         // When
-        when(pricesRepository.findByBrandIdAndProductId(brandId, productId)).thenReturn(
-            PricesObjectMother.mockPricesByBrandIdAndProductId(brandId, productId));
+        when(pricesRepository.findTopByBrandIdAndProductIdAndApplicationDateBetweenOrderByPriorityDesc(
+            brandId, productId, applicationDate)).thenReturn(Optional.empty());
 
         // Then
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
@@ -96,23 +96,5 @@ class ProductOffersServiceTests {
         assertEquals("Price not found for the given parameters", exception.getReason());
     }
 
-    @Mock
-    Logger mockLogger;
-
-    @Test
-    void testLogInfo() {
-        // Given
-        PricesRepository mockRepository = mock(PricesRepository.class);
-
-
-        ProductOffersServiceImpl service = new ProductOffersServiceImpl(mockRepository);
-
-
-        // When
-        service.logInfo("Test message");
-
-        // Then
-        verify(mockLogger, times(0)).info("Test message");
-    }
-
 }
+

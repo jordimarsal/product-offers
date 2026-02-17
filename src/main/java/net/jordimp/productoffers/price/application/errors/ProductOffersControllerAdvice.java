@@ -39,9 +39,7 @@ public class ProductOffersControllerAdvice {
     }
 
     private String getExceptionMessage(ResponseStatusException exception) {
-        return exception.getMessage()
-            .substring(exception.getStatusCode().toString().length() +1)
-            .replace("\"", "");
+        return java.util.Optional.ofNullable(exception.getReason()).orElse(exception.getMessage());
     }
 
 }
