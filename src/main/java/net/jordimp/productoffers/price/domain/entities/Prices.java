@@ -1,14 +1,13 @@
 package net.jordimp.productoffers.price.domain.entities;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -55,16 +54,14 @@ public class Prices {
      */
     public boolean isEffectiveAt(LocalDateTime applicationDate) {
         return (startDate == null || !applicationDate.isBefore(startDate))
-            && (endDate == null || !applicationDate.isAfter(endDate));
+                && (endDate == null || !applicationDate.isAfter(endDate));
     }
 
-    /**
-     * Return true when this price matches the provided brandId and productId.
-     */
+    /** Return true when this price matches the provided brandId and productId. */
     public boolean matches(Long brandId, Long productId) {
-        return this.brandId != null && this.brandId.equals(brandId)
-            && this.productId != null && this.productId.equals(productId);
+        return this.brandId != null
+                && this.brandId.equals(brandId)
+                && this.productId != null
+                && this.productId.equals(productId);
     }
-
 }
-

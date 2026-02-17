@@ -2,10 +2,9 @@ package net.jordimp.productoffers.price.application.mappers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Test;
-
 import net.jordimp.productoffers.helpers.PricesObjectMother;
 import net.jordimp.productoffers.price.application.apimodels.ResponseProductOffer;
+import org.junit.jupiter.api.Test;
 
 class MapperProductOffersTest {
 

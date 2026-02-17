@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
-
 import lombok.experimental.UtilityClass;
 import net.jordimp.productoffers.price.domain.entities.Prices;
 
@@ -62,12 +61,17 @@ public class PricesObjectMother {
 
     public static List<Prices> mockPricesByBrandIdAndProductId(Long brandId, Long productId) {
         return mockPrices().stream()
-            .filter(price -> price.getBrandId().equals(brandId) && price.getProductId().equals(productId))
-            .toList();
+                .filter(
+                        price ->
+                                price.getBrandId().equals(brandId)
+                                        && price.getProductId().equals(productId))
+                .toList();
     }
 
     public static Prices mockPricesExpected(Long priceList) {
-        return mockPrices().stream().filter(price -> price.getPriceList().equals(priceList)).findFirst()
-            .orElse(null);
+        return mockPrices().stream()
+                .filter(price -> price.getPriceList().equals(priceList))
+                .findFirst()
+                .orElse(null);
     }
 }

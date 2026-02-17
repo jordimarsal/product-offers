@@ -8,8 +8,13 @@ import net.jordimp.productoffers.price.domain.entities.Prices;
 public class MapperProductOffers {
 
     public static ResponseProductOffer entityToResponse(final Prices price) {
-        return new ResponseProductOffer().setProductId(price.getProductId()).setBrandId(price.getBrandId())
-            .setStartDate(price.getStartDate()).setEndDate(price.getEndDate()).setPriceList(price.getPriceList())
-            .setPrice(price.getPrice()).setCurrency(price.getCurrency());
+        return new ResponseProductOffer()
+                .setProductId(price.getProductId())
+                .setBrandId(price.getBrandId())
+                .setStartDate(price.getStartDate())
+                .setEndDate(price.getEndDate())
+                .setPriceList(price.getPriceList())
+                .setPrice(price.getPrice())
+                .setCurrency(price.getCurrency());
     }
 }
