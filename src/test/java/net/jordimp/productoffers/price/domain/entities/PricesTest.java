@@ -40,4 +40,33 @@ class PricesTest {
         assertFalse(p.matches(2L, 100L));
         assertFalse(p.matches(1L, 200L));
     }
+
+    @Test
+    void isEffectiveAt_handlesNullStartOrEndDates_and_matches_handlesNulls() {
+        Prices p = new Prices();
+
+        // startDate == null -> treated as unbounded start
+        p.setStartDate(null);
+        p.setEndDate(LocalDateTime.of(2020,6,14,23,59));
+        assertTrue(p.isEffectiveAt(LocalDateTime.of(2020,6,14,12,0)));
+
+        // endDate == null -> treated as unbounded end
+        p.setStartDate(LocalDateTime.of(2020,6,14,0,0));
+        p.setEndDate(null);
+        assertTrue(p.isEffectiveAt(LocalDateTime.of(2020,6,15,12,0)));
+
+        // both null -> always effective
+        p.setStartDate(null);
+        p.setEndDate(null);
+        assertTrue(p.isEffectiveAt(LocalDateTime.of(2019,1,1,0,0)));
+
+        // matches: null brand/product on entity should return false
+        p.setBrandId(null);
+        p.setProductId(100L);
+        assertFalse(p.matches(1L, 100L));
+
+        p.setBrandId(1L);
+        p.setProductId(null);
+        assertFalse(p.matches(1L, 100L));
+    }
 }

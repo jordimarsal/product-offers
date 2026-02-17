@@ -20,12 +20,12 @@
         <assertj.core.version>3.23.1</assertj.core.version>
         <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
         <!-- JaCoCo default ratios -->
-        <jacoco.instruction.covered.ratio>0.750</jacoco.instruction.covered.ratio>
-        <jacoco.branch.covered.ratio>0.500</jacoco.branch.covered.ratio>
-        <jacoco.complexity.covered.ratio>0.6250</jacoco.complexity.covered.ratio>
-        <jacoco.line.covered.ratio>0.7500</jacoco.line.covered.ratio>
-        <jacoco.method.covered.ratio>0.660</jacoco.method.covered.ratio>
-        <jacoco.class.covered.ratio>0.800</jacoco.class.covered.ratio>
+        <jacoco.instruction.covered.ratio>0.850</jacoco.instruction.covered.ratio>
+        <jacoco.branch.covered.ratio>0.850</jacoco.branch.covered.ratio>
+        <jacoco.complexity.covered.ratio>0.850</jacoco.complexity.covered.ratio>
+        <jacoco.line.covered.ratio>0.850</jacoco.line.covered.ratio>
+        <jacoco.method.covered.ratio>0.850</jacoco.method.covered.ratio>
+        <jacoco.class.covered.ratio>0.850</jacoco.class.covered.ratio>
 
 	</properties>
 	<dependencies>
