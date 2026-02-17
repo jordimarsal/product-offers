@@ -13,6 +13,7 @@ This service enables endpoints for Product Offers API
 - Mockito 5.7.0
 - Lombok 1.18.26
 - Jacoco 0.8.1
+- Spotless 3.1.0
 <br>
 
 
