@@ -18,7 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import net.jordimp.productoffers.price.domain.exceptions.PriceNotFoundException;
 import net.jordimp.productoffers.price.infrastructure.persistence.SpringDataPriceAdapter;
-import net.jordimp.productoffers.price.domain.services.ProductOffersService;
+import net.jordimp.productoffers.price.application.services.ProductOffersService;
 
 @WebMvcTest(controllers = ProductOffersController.class,
     excludeAutoConfiguration = {

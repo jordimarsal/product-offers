@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import net.jordimp.productoffers.price.application.apimodels.ResponseProductOffer;
-import net.jordimp.productoffers.price.domain.services.ProductOffersService;
+import net.jordimp.productoffers.price.application.services.ProductOffersService;
 
 @RestController
 @Validated
