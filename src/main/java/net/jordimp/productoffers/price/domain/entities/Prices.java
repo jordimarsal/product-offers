@@ -50,6 +50,21 @@ public class Prices {
     @Column(name = "CURRENCY", nullable = false)
     private String currency;
 
+    /**
+     * Return true when the given application date falls between startDate and endDate (inclusive).
+     */
+    public boolean isEffectiveAt(LocalDateTime applicationDate) {
+        return (startDate == null || !applicationDate.isBefore(startDate))
+            && (endDate == null || !applicationDate.isAfter(endDate));
+    }
+
+    /**
+     * Return true when this price matches the provided brandId and productId.
+     */
+    public boolean matches(Long brandId, Long productId) {
+        return this.brandId != null && this.brandId.equals(brandId)
+            && this.productId != null && this.productId.equals(productId);
+    }
 
 }
 

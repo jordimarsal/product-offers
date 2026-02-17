@@ -12,9 +12,9 @@ class MapperProductOffersTest {
     @Test
     void entityToResponse_mapsAllFields() {
         var price = PricesObjectMother.mockPricesExpected(1L);
-        ResponseProductOffer resp = MapperProductOffers.entityToResponse(35455L, price);
+        ResponseProductOffer resp = MapperProductOffers.entityToResponse(price);
 
-        assertEquals(35455L, resp.getProductId());
+        assertEquals(price.getProductId(), resp.getProductId());
         assertEquals(price.getBrandId(), resp.getBrandId());
         assertEquals(price.getPriceList(), resp.getPriceList());
         assertEquals(price.getPrice(), resp.getPrice());
