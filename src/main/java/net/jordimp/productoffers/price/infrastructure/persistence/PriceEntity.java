@@ -1,4 +1,4 @@
-package net.jordimp.productoffers.price.domain.entities;
+package net.jordimp.productoffers.price.infrastructure.persistence;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,16 +10,16 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+/** JPA entity for database persistence. This entity maps to the PRICES table in the database. */
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "PRICES")
-public class Prices {
+public class PriceEntity {
+
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,20 +48,4 @@ public class Prices {
 
     @Column(name = "CURRENCY", nullable = false)
     private String currency;
-
-    /**
-     * Return true when the given application date falls between startDate and endDate (inclusive).
-     */
-    public boolean isEffectiveAt(LocalDateTime applicationDate) {
-        return (startDate == null || !applicationDate.isBefore(startDate))
-                && (endDate == null || !applicationDate.isAfter(endDate));
-    }
-
-    /** Return true when this price matches the provided brandId and productId. */
-    public boolean matches(Long brandId, Long productId) {
-        return this.brandId != null
-                && this.brandId.equals(brandId)
-                && this.productId != null
-                && this.productId.equals(productId);
-    }
 }

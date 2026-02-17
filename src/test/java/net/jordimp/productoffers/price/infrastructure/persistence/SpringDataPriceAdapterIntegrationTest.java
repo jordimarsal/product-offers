@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-import net.jordimp.productoffers.price.domain.entities.Prices;
+import net.jordimp.productoffers.price.domain.entities.Price;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -26,10 +26,10 @@ class SpringDataPriceAdapterIntegrationTest {
 
         LocalDateTime applicationDate = LocalDateTime.of(2020, 6, 14, 16, 0);
 
-        Optional<Prices> result = adapter.findBestPrice(1L, 35455L, applicationDate);
+        Optional<Price> result = adapter.findBestPrice(1L, 35455L, applicationDate);
 
         assertTrue(result.isPresent());
-        assertEquals(2L, result.get().getPriceList());
+        assertEquals(2L, result.get().getPriceList().value());
 
         // verify repository query returns the expected ordered list (priority DESC)
         var list =

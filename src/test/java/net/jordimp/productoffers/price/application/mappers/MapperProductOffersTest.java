@@ -13,12 +13,12 @@ class MapperProductOffersTest {
         var price = PricesObjectMother.mockPricesExpected(1L);
         ResponseProductOffer resp = MapperProductOffers.entityToResponse(price);
 
-        assertEquals(price.getProductId(), resp.getProductId());
-        assertEquals(price.getBrandId(), resp.getBrandId());
-        assertEquals(price.getPriceList(), resp.getPriceList());
-        assertEquals(price.getPrice(), resp.getPrice());
-        assertEquals(price.getCurrency(), resp.getCurrency());
-        assertEquals(price.getStartDate(), resp.getStartDate());
-        assertEquals(price.getEndDate(), resp.getEndDate());
+        assertEquals(price.getProductId().value(), resp.getProductId());
+        assertEquals(price.getBrandId().value(), resp.getBrandId());
+        assertEquals(price.getPriceList().value(), resp.getPriceList());
+        assertEquals(price.getPrice().amount(), resp.getPrice());
+        assertEquals(price.getPrice().currency(), resp.getCurrency());
+        assertEquals(price.getDateRange().startDate(), resp.getStartDate());
+        assertEquals(price.getDateRange().endDate(), resp.getEndDate());
     }
 }

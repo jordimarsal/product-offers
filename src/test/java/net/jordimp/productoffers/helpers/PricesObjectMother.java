@@ -1,6 +1,6 @@
 package net.jordimp.productoffers.helpers;
 
-import static net.jordimp.productoffers.shared.constants.Patterns.TEST_FORMAT;
+import static net.jordimp.productoffers.shared.constants.ConstantsTest.TEST_FORMAT;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -8,69 +8,83 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import lombok.experimental.UtilityClass;
-import net.jordimp.productoffers.price.domain.entities.Prices;
+import net.jordimp.productoffers.price.domain.entities.Price;
+import net.jordimp.productoffers.price.domain.valueobjects.BrandId;
+import net.jordimp.productoffers.price.domain.valueobjects.DateRange;
+import net.jordimp.productoffers.price.domain.valueobjects.Money;
+import net.jordimp.productoffers.price.domain.valueobjects.PriceList;
+import net.jordimp.productoffers.price.domain.valueobjects.Priority;
+import net.jordimp.productoffers.price.domain.valueobjects.ProductId;
 
 @UtilityClass
 public class PricesObjectMother {
 
-    public static List<Prices> mockPrices() {
+    public static List<Price> mockPrices() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(TEST_FORMAT);
 
-        Prices price1 = new Prices();
-        price1.setBrandId(1L);
-        price1.setStartDate(LocalDateTime.parse("2020-06-14-00.00.00", formatter));
-        price1.setEndDate(LocalDateTime.parse("2020-12-31-23.59.59", formatter));
-        price1.setPriceList(1L);
-        price1.setProductId(35455L);
-        price1.setPriority(0);
-        price1.setPrice(BigDecimal.valueOf(35.50));
-        price1.setCurrency("EUR");
+        Price price1 =
+                new Price(
+                        1L,
+                        new BrandId(1L),
+                        new ProductId(35455L),
+                        new DateRange(
+                                LocalDateTime.parse("2020-06-14-00.00.00", formatter),
+                                LocalDateTime.parse("2020-12-31-23.59.59", formatter)),
+                        new PriceList(1L),
+                        new Priority(0),
+                        new Money(BigDecimal.valueOf(35.50), "EUR"));
 
-        Prices price2 = new Prices();
-        price2.setBrandId(1L);
-        price2.setStartDate(LocalDateTime.parse("2020-06-14-15.00.00", formatter));
-        price2.setEndDate(LocalDateTime.parse("2020-06-14-18.30.00", formatter));
-        price2.setPriceList(2L);
-        price2.setProductId(35455L);
-        price2.setPriority(1);
-        price2.setPrice(BigDecimal.valueOf(25.45));
-        price2.setCurrency("EUR");
+        Price price2 =
+                new Price(
+                        2L,
+                        new BrandId(1L),
+                        new ProductId(35455L),
+                        new DateRange(
+                                LocalDateTime.parse("2020-06-14-15.00.00", formatter),
+                                LocalDateTime.parse("2020-06-14-18.30.00", formatter)),
+                        new PriceList(2L),
+                        new Priority(1),
+                        new Money(BigDecimal.valueOf(25.45), "EUR"));
 
-        Prices price3 = new Prices();
-        price3.setBrandId(1L);
-        price3.setStartDate(LocalDateTime.parse("2020-06-15-00.00.00", formatter));
-        price3.setEndDate(LocalDateTime.parse("2020-06-15-11.00.00", formatter));
-        price3.setPriceList(3L);
-        price3.setProductId(35455L);
-        price3.setPriority(1);
-        price3.setPrice(BigDecimal.valueOf(30.50));
-        price3.setCurrency("EUR");
+        Price price3 =
+                new Price(
+                        3L,
+                        new BrandId(1L),
+                        new ProductId(35455L),
+                        new DateRange(
+                                LocalDateTime.parse("2020-06-15-00.00.00", formatter),
+                                LocalDateTime.parse("2020-06-15-11.00.00", formatter)),
+                        new PriceList(3L),
+                        new Priority(1),
+                        new Money(BigDecimal.valueOf(30.50), "EUR"));
 
-        Prices price4 = new Prices();
-        price4.setBrandId(1L);
-        price4.setStartDate(LocalDateTime.parse("2020-06-15-16.00.00", formatter));
-        price4.setEndDate(LocalDateTime.parse("2020-12-31-23.59.59", formatter));
-        price4.setPriceList(4L);
-        price4.setProductId(35455L);
-        price4.setPriority(1);
-        price4.setPrice(BigDecimal.valueOf(38.95));
-        price4.setCurrency("EUR");
+        Price price4 =
+                new Price(
+                        4L,
+                        new BrandId(1L),
+                        new ProductId(35455L),
+                        new DateRange(
+                                LocalDateTime.parse("2020-06-15-16.00.00", formatter),
+                                LocalDateTime.parse("2020-12-31-23.59.59", formatter)),
+                        new PriceList(4L),
+                        new Priority(1),
+                        new Money(BigDecimal.valueOf(38.95), "EUR"));
 
         return Arrays.asList(price1, price2, price3, price4);
     }
 
-    public static List<Prices> mockPricesByBrandIdAndProductId(Long brandId, Long productId) {
+    public static List<Price> mockPricesByBrandIdAndProductId(Long brandId, Long productId) {
         return mockPrices().stream()
                 .filter(
                         price ->
-                                price.getBrandId().equals(brandId)
-                                        && price.getProductId().equals(productId))
+                                price.getBrandId().value().equals(brandId)
+                                        && price.getProductId().value().equals(productId))
                 .toList();
     }
 
-    public static Prices mockPricesExpected(Long priceList) {
+    public static Price mockPricesExpected(Long priceList) {
         return mockPrices().stream()
-                .filter(price -> price.getPriceList().equals(priceList))
+                .filter(price -> price.getPriceList().value().equals(priceList))
                 .findFirst()
                 .orElse(null);
     }

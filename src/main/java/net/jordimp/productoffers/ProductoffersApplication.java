@@ -12,7 +12,10 @@ import org.springframework.context.annotation.ComponentScan;
             "net.jordimp.productoffers.price.infrastructure",
             "net.jordimp.productoffers.shared"
         })
-@EntityScan("net.jordimp.productoffers.price.domain.entities")
+@EntityScan({
+    "net.jordimp.productoffers.price.domain.entities",
+    "net.jordimp.productoffers.price.infrastructure.persistence"
+})
 // Keep repository auto-discovery (Spring Boot will auto-configure JPA repositories).
 // Component scan limited to application + domain packages to avoid loading
 // infrastructure beans during slice tests (WebMvcTest).

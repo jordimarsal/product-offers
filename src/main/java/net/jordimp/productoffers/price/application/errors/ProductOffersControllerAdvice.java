@@ -1,6 +1,7 @@
 package net.jordimp.productoffers.price.application.errors;
 
 import jakarta.validation.ConstraintViolationException;
+import lombok.extern.slf4j.Slf4j;
 import net.jordimp.productoffers.price.application.controllers.ProductOffersController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.server.ResponseStatusException;
 
+@Slf4j
 @RestControllerAdvice(assignableTypes = ProductOffersController.class)
 public class ProductOffersControllerAdvice {
 
@@ -66,5 +68,16 @@ public class ProductOffersControllerAdvice {
 
     private String getExceptionMessage(ResponseStatusException exception) {
         return java.util.Optional.ofNullable(exception.getReason()).orElse(exception.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    private ErrorMessage handle(Exception ex) {
+        log.error("Unexpected error occurred", ex);
+        return new ErrorMessage(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Internal server error",
+                java.time.OffsetDateTime.now().toString(),
+                org.slf4j.MDC.get("correlator"));
     }
 }

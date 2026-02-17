@@ -72,4 +72,21 @@ class ProductOffersControllerAdviceTest {
                 .andExpect(jsonPath("$.message", is("custom reason")))
                 .andExpect(jsonPath("$.correlator", is("correlator")));
     }
+
+    @Test
+    void whenServiceThrowsGenericException_thenControllerAdviceReturns500() throws Exception {
+        LocalDateTime applicationDate = LocalDateTime.of(2020, 6, 14, 10, 0);
+        when(productOffersService.getInquiryPrices("correlator", applicationDate, 35455L, 1L))
+                .thenThrow(new RuntimeException("Unexpected error"));
+
+        mockMvc.perform(
+                        get("/inquiry-prices")
+                                .param("applicationDate", applicationDate.toString())
+                                .param("productId", "35455")
+                                .param("brandId", "1")
+                                .header("x-correlator", "correlator"))
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.message", is("Internal server error")))
+                .andExpect(jsonPath("$.correlator", is("correlator")));
+    }
 }
