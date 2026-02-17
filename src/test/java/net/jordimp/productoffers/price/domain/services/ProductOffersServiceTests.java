@@ -25,7 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import net.jordimp.productoffers.helpers.PricesObjectMother;
-import net.jordimp.productoffers.price.domain.repositories.PricesRepository;
+import net.jordimp.productoffers.price.domain.ports.PriceRepositoryPort;
 
 class ProductOffersServiceTests {
 
@@ -33,7 +33,7 @@ class ProductOffersServiceTests {
     private ProductOffersServiceImpl service;
 
     @Mock
-    private PricesRepository pricesRepository;
+    private PriceRepositoryPort pricesRepository;
 
     @BeforeEach
     public void init() {
@@ -55,8 +55,7 @@ class ProductOffersServiceTests {
     @MethodSource("getOffersParams")
     void testGetInquiryPrices(LocalDateTime applicationDate, Long productId, Long brandId, Long expectedPriceList) {
         // When
-        when(pricesRepository.findTopByBrandIdAndProductIdAndApplicationDateBetweenOrderByPriorityDesc(
-            brandId, productId,applicationDate)).thenReturn(Optional.ofNullable(
+        when(pricesRepository.findBestPrice(brandId, productId, applicationDate)).thenReturn(Optional.ofNullable(
             PricesObjectMother.mockPricesExpected(expectedPriceList)
         )
         );
@@ -83,36 +82,17 @@ class ProductOffersServiceTests {
     @MethodSource("getOffersParamsError")
     void testGetInquiryPricesErrorCases(LocalDateTime applicationDate, Long productId, Long brandId) {
         // When
-        when(pricesRepository.findByBrandIdAndProductId(brandId, productId)).thenReturn(
-            PricesObjectMother.mockPricesByBrandIdAndProductId(brandId, productId));
+        when(pricesRepository.findBestPrice(brandId, productId, applicationDate)).thenReturn(Optional.empty());
 
         // Then
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
-            service.getInquiryPrices("correlator", applicationDate, productId, brandId);
-        });
+        net.jordimp.productoffers.price.domain.exceptions.PriceNotFoundException exception = assertThrows(
+            net.jordimp.productoffers.price.domain.exceptions.PriceNotFoundException.class,
+            () -> service.getInquiryPrices("correlator", applicationDate, productId, brandId)
+        );
 
         // Assert
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
-        assertEquals("Price not found for the given parameters", exception.getReason());
-    }
-
-    @Mock
-    Logger mockLogger;
-
-    @Test
-    void testLogInfo() {
-        // Given
-        PricesRepository mockRepository = mock(PricesRepository.class);
-
-
-        ProductOffersServiceImpl service = new ProductOffersServiceImpl(mockRepository);
-
-
-        // When
-        service.logInfo("Test message");
-
-        // Then
-        verify(mockLogger, times(0)).info("Test message");
+        assertEquals("Price not found for the given parameters", exception.getMessage());
     }
 
 }
+

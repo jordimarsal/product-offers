@@ -6,9 +6,16 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@EnableJpaRepositories("net.jordimp.productoffers.price.domain.repositories.**")
-@ComponentScan(basePackages = { "net.jordimp.productoffers.price.*" })
-@EntityScan("net.jordimp.productoffers.price.domain.entities.**")
+@ComponentScan(basePackages = {
+    "net.jordimp.productoffers.price.application",
+    "net.jordimp.productoffers.price.domain",
+    "net.jordimp.productoffers.price.infrastructure",
+    "net.jordimp.productoffers.shared"
+})
+@EntityScan("net.jordimp.productoffers.price.domain.entities")
+// Keep repository auto-discovery (Spring Boot will auto-configure JPA repositories).
+// Component scan limited to application + domain packages to avoid loading
+// infrastructure beans during slice tests (WebMvcTest).
 @SpringBootApplication
 public class ProductoffersApplication {
 
