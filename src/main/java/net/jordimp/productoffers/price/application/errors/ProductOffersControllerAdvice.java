@@ -21,6 +21,12 @@ public class ProductOffersControllerAdvice {
     }
 
     @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    private ErrorMessage handle(net.jordimp.productoffers.price.domain.exceptions.PriceNotFoundException ex) {
+        return new ErrorMessage(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     private ErrorMessage handle(ConstraintViolationException exception) {
         return new ErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());

@@ -2,7 +2,7 @@ package net.jordimp.productoffers.price.application.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.jordimp.productoffers.price.application.apimodels.ResponseProductOffer;
-import net.jordimp.productoffers.price.domain.repositories.PricesRepository;
+import net.jordimp.productoffers.price.infrastructure.persistence.SpringDataPricesRepository;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ class ProductOffersControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private PricesRepository pricesRepository;
+    private SpringDataPricesRepository pricesRepository;
 
     @Test
     void fetchInquiryPricesEndpoint() throws Exception {
@@ -51,4 +51,40 @@ class ProductOffersControllerTest {
             brandId,productId, applicationDate).isPresent());
     }
 
+    @Test
+    void fetchInquiryPrices_MissingParameter_returnsBadRequest() throws Exception {
+        final LocalDateTime applicationDate = LocalDateTime.of(2020, 6, 14, 10, 0);
+        mockMvc.perform(get("/inquiry-prices")
+            .param("applicationDate", applicationDate.toString())
+            // missing productId
+            .param("brandId", "1")
+            .header("x-correlator", "correlator"))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.message").exists());
+    }
+
+    @Test
+    void fetchInquiryPrices_TypeMismatch_returnsBadRequest() throws Exception {
+        final LocalDateTime applicationDate = LocalDateTime.of(2020, 6, 14, 10, 0);
+        mockMvc.perform(get("/inquiry-prices")
+            .param("applicationDate", applicationDate.toString())
+            .param("productId", "not-a-number")
+            .param("brandId", "1")
+            .header("x-correlator", "correlator"))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.message").exists());
+    }
+
+    @Test
+    void fetchInquiryPrices_ValidationViolation_returnsBadRequest() throws Exception {
+        final LocalDateTime applicationDate = LocalDateTime.of(2020, 6, 14, 10, 0);
+        // productId is annotated with @Min(1)
+        mockMvc.perform(get("/inquiry-prices")
+            .param("applicationDate", applicationDate.toString())
+            .param("productId", "0")
+            .param("brandId", "1")
+            .header("x-correlator", "correlator"))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.message").exists());
+    }
 }

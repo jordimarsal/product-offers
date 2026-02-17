@@ -25,7 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import net.jordimp.productoffers.helpers.PricesObjectMother;
-import net.jordimp.productoffers.price.domain.repositories.PricesRepository;
+import net.jordimp.productoffers.price.domain.ports.PriceRepositoryPort;
 
 class ProductOffersServiceTests {
 
@@ -33,7 +33,7 @@ class ProductOffersServiceTests {
     private ProductOffersServiceImpl service;
 
     @Mock
-    private PricesRepository pricesRepository;
+    private PriceRepositoryPort pricesRepository;
 
     @BeforeEach
     public void init() {
@@ -87,13 +87,13 @@ class ProductOffersServiceTests {
             brandId, productId, applicationDate)).thenReturn(Optional.empty());
 
         // Then
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> {
-            service.getInquiryPrices("correlator", applicationDate, productId, brandId);
-        });
+        net.jordimp.productoffers.price.domain.exceptions.PriceNotFoundException exception = assertThrows(
+            net.jordimp.productoffers.price.domain.exceptions.PriceNotFoundException.class,
+            () -> service.getInquiryPrices("correlator", applicationDate, productId, brandId)
+        );
 
         // Assert
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
-        assertEquals("Price not found for the given parameters", exception.getReason());
+        assertEquals("Price not found for the given parameters", exception.getMessage());
     }
 
 }
