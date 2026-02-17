@@ -35,23 +35,23 @@ class SpringDataPriceAdapterTest {
         LocalDateTime applicationDate = LocalDateTime.of(2020, 6, 14, 10, 0);
         Prices expected = PricesObjectMother.mockPricesExpected(1L);
 
-        when(repository.findTopByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
-            1L, 35455L, applicationDate)).thenReturn(Optional.of(expected));
+        when(repository.findByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
+            1L, 35455L, applicationDate, applicationDate)).thenReturn(java.util.List.of(expected));
 
         Optional<Prices> result = adapter.findBestPrice(1L, 35455L, applicationDate);
 
         assertTrue(result.isPresent());
         assertEquals(expected, result.get());
-        verify(repository, times(1)).findTopByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
-            1L, 35455L, applicationDate);
+        verify(repository, times(1)).findByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
+            1L, 35455L, applicationDate, applicationDate);
     }
 
     @Test
     void whenRepositoryReturnsEmpty_adapterReturnsEmpty() {
         LocalDateTime applicationDate = LocalDateTime.of(2020, 6, 14, 10, 0);
 
-        when(repository.findTopByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
-            1L, 35455L, applicationDate)).thenReturn(Optional.empty());
+        when(repository.findByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
+            1L, 35455L, applicationDate, applicationDate)).thenReturn(java.util.List.of());
 
         Optional<Prices> result = adapter.findBestPrice(1L, 35455L, applicationDate);
 

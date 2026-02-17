@@ -15,7 +15,13 @@ import net.jordimp.productoffers.price.domain.entities.Prices;
 public interface SpringDataPricesRepository extends JpaRepository<Prices, Long> {
     List<Prices> findByBrandIdAndProductId(Long brandId, Long productId);
 
-    Optional<Prices> findTopByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
-        Long brandId, Long productId, LocalDateTime applicationDate);
+    List<Prices> findByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
+        Long brandId, Long productId, LocalDateTime startDate, LocalDateTime endDate);
+
+    default Optional<Prices> findTopByBrandIdAndProductIdAndApplicationDateBetweenOrderByPriorityDesc(
+        Long brandId, Long productId, LocalDateTime applicationDate) {
+        return findByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
+            brandId, productId, applicationDate, applicationDate).stream().findFirst();
+    }
 
 }
