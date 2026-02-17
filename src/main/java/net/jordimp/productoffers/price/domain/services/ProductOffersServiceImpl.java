@@ -33,8 +33,8 @@ public class ProductOffersServiceImpl implements ProductOffersService {
 
         logInfo(format(LOG_INFO_GET, xCorrelator, brandId, productId, applicationDate.toString()));
 
-        return pricesRepository.findTopByBrandIdAndProductIdAndApplicationDateBetweenOrderByPriorityDesc(brandId,
-            productId, applicationDate).map(price -> entityToResponse(productId, price))
+        return pricesRepository.findBestPrice(brandId, productId, applicationDate)
+            .map(price -> entityToResponse(productId, price))
             .orElseThrow(() -> {
                 log.warning(format(LOG_WARN_404, xCorrelator, brandId, productId, applicationDate));
                 return new PriceNotFoundException();

@@ -47,8 +47,8 @@ class ProductOffersControllerTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("priceList", is(1)));
 
-        assert(pricesRepository.findTopByBrandIdAndProductIdAndApplicationDateBetweenOrderByPriorityDesc(
-            brandId,productId, applicationDate).isPresent());
+        assert(pricesRepository.findTopByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
+            brandId, productId, applicationDate).isPresent());
     }
 
     @Test

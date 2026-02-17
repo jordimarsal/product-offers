@@ -55,8 +55,7 @@ class ProductOffersServiceTests {
     @MethodSource("getOffersParams")
     void testGetInquiryPrices(LocalDateTime applicationDate, Long productId, Long brandId, Long expectedPriceList) {
         // When
-        when(pricesRepository.findTopByBrandIdAndProductIdAndApplicationDateBetweenOrderByPriorityDesc(
-            brandId, productId,applicationDate)).thenReturn(Optional.ofNullable(
+        when(pricesRepository.findBestPrice(brandId, productId, applicationDate)).thenReturn(Optional.ofNullable(
             PricesObjectMother.mockPricesExpected(expectedPriceList)
         )
         );
@@ -83,8 +82,7 @@ class ProductOffersServiceTests {
     @MethodSource("getOffersParamsError")
     void testGetInquiryPricesErrorCases(LocalDateTime applicationDate, Long productId, Long brandId) {
         // When
-        when(pricesRepository.findTopByBrandIdAndProductIdAndApplicationDateBetweenOrderByPriorityDesc(
-            brandId, productId, applicationDate)).thenReturn(Optional.empty());
+        when(pricesRepository.findBestPrice(brandId, productId, applicationDate)).thenReturn(Optional.empty());
 
         // Then
         net.jordimp.productoffers.price.domain.exceptions.PriceNotFoundException exception = assertThrows(

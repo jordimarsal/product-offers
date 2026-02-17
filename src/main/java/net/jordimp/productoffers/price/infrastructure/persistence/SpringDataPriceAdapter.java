@@ -16,10 +16,9 @@ public class SpringDataPriceAdapter implements PriceRepositoryPort {
     private final SpringDataPricesRepository repository;
 
     @Override
-    public Optional<Prices> findTopByBrandIdAndProductIdAndApplicationDateBetweenOrderByPriorityDesc(
-        Long brandId, Long productId, LocalDateTime applicationDate) {
-        return repository.findTopByBrandIdAndProductIdAndApplicationDateBetweenOrderByPriorityDesc(
+    public Optional<Prices> findBestPrice(Long brandId, Long productId, LocalDateTime applicationDate) {
+        return repository.findTopByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
             brandId, productId, applicationDate);
     }
 
-}
+} 
