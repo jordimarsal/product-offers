@@ -1,5 +1,7 @@
 #  Product Offers API
 
+[![codecov](https://codecov.io/gh/jordimarsal/product-offers/branch/main/graph/badge.svg)](https://codecov.io/gh/jordimarsal/product-offers)
+
 This service enables endpoints for Product Offers API
 <br>
 ## Implemented with:
