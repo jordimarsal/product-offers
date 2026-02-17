@@ -4,6 +4,7 @@ import static net.jordimp.productoffers.shared.constants.Patterns.INQUIRY_PRICES
 
 import java.time.LocalDateTime;
 
+import org.slf4j.MDC;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,7 @@ public class ProductOffersController {
         @RequestParam("applicationDate") @DateTimeFormat(pattern = INQUIRY_PRICES_FORMAT) LocalDateTime applicationDate,
         @RequestParam("productId") @NotNull @Min(1)Long productId,
         @RequestParam("brandId") @NotNull @Min(1)Long brandId,
-        @RequestHeader(value = "x-correlator") String xCorrelator) {
+        @RequestHeader(value = "x-correlator", required = true) String xCorrelator) {
 
         return imp.getInquiryPrices(xCorrelator, applicationDate, productId, brandId);
     }

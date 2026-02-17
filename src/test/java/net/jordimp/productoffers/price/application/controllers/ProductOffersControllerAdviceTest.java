@@ -53,7 +53,8 @@ class ProductOffersControllerAdviceTest {
             .param("brandId", "1")
             .header("x-correlator", "correlator"))
             .andExpect(status().isNotFound())
-            .andExpect(jsonPath("$.message", is("Price not found for the given parameters")));
+            .andExpect(jsonPath("$.message", is("Price not found for the given parameters")))
+            .andExpect(jsonPath("$.correlator", is("correlator")));
     }
 
     @Test
@@ -68,6 +69,7 @@ class ProductOffersControllerAdviceTest {
             .param("brandId", "1")
             .header("x-correlator", "correlator"))
             .andExpect(status().isNotFound())
-            .andExpect(jsonPath("$.message", is("custom reason")));
+            .andExpect(jsonPath("$.message", is("custom reason")))
+            .andExpect(jsonPath("$.correlator", is("correlator")));
     }
 }

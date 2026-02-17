@@ -17,31 +17,32 @@ public class ProductOffersControllerAdvice {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     private ErrorMessage handle(ResponseStatusException exception) {
-        return new ErrorMessage((HttpStatus) exception.getStatusCode(), getExceptionMessage(exception));
+        return new ErrorMessage(((HttpStatus) exception.getStatusCode()).value(), getExceptionMessage(exception),
+            java.time.OffsetDateTime.now().toString(), org.slf4j.MDC.get("correlator"));
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
     private ErrorMessage handle(net.jordimp.productoffers.price.domain.exceptions.PriceNotFoundException ex) {
-        return new ErrorMessage(HttpStatus.NOT_FOUND, ex.getMessage());
+        return new ErrorMessage(HttpStatus.NOT_FOUND.value(), ex.getMessage(), java.time.OffsetDateTime.now().toString(), org.slf4j.MDC.get("correlator"));
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     private ErrorMessage handle(ConstraintViolationException exception) {
-        return new ErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), java.time.OffsetDateTime.now().toString(), org.slf4j.MDC.get("correlator"));
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     private ErrorMessage handle(MethodArgumentTypeMismatchException exception) {
-        return new ErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), java.time.OffsetDateTime.now().toString(), org.slf4j.MDC.get("correlator"));
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     private ErrorMessage handle(MissingServletRequestParameterException exception) {
-        return new ErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), java.time.OffsetDateTime.now().toString(), org.slf4j.MDC.get("correlator"));
     }
 
     private String getExceptionMessage(ResponseStatusException exception) {

@@ -1,6 +1,5 @@
 package net.jordimp.productoffers.price.application.services;
 
-import static java.lang.String.format;
 import static net.jordimp.productoffers.price.application.mappers.MapperProductOffers.entityToResponse;
 import static net.jordimp.productoffers.shared.constants.MessageConstants.LOG_INFO_GET;
 import static net.jordimp.productoffers.shared.constants.MessageConstants.LOG_WARN_404;
@@ -25,25 +24,19 @@ public class ProductOffersServiceImpl implements ProductOffersService {
         this.pricesRepository = pricesRepository;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public ResponseProductOffer getInquiryPrices(final String xCorrelator, final LocalDateTime applicationDate,
         final Long productId, final Long brandId) {
 
-        logInfo(format(LOG_INFO_GET, xCorrelator, brandId, productId, applicationDate.toString()));
+        log.info(LOG_INFO_GET, xCorrelator, brandId, productId, applicationDate);
 
         return pricesRepository.findBestPrice(brandId, productId, applicationDate)
             .map(price -> entityToResponse(price))
             .orElseThrow(() -> {
-                log.warn(format(LOG_WARN_404, xCorrelator, brandId, productId, applicationDate));
+                log.warn(LOG_WARN_404, xCorrelator, brandId, productId, applicationDate);
                 return new PriceNotFoundException();
             });
-    }
-
-    void logInfo(String msg) {
-        if (log.isInfoEnabled()){
-            log.info(msg);
-        }
     }
 
 }
